@@ -19,7 +19,7 @@ import com.oracle.xmlns.apps.projects.billing.workarea.invoice.invoiceservicev2.
 
 public class MainClient {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		
 		
 	//	SecurityPolicyFeature[] securityFeatures = new SecurityPolicyFeature[] { new SecurityPolicyFeature("oracle/wss11_saml_or_username_token_with_message_protection_service_policy") };
@@ -34,7 +34,6 @@ public class MainClient {
            }
        });
 		
-		
 		ProjectContractInvoiceService projectContractInvoiceServiceI = projectContractInvoiceService_Service.getProjectContractInvoiceServiceSoapHttpPort();	
 		
 		BindingProvider bindingProvider = ((BindingProvider)projectContractInvoiceServiceI);
@@ -42,8 +41,18 @@ public class MainClient {
 	//	bindingProviderMap.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, "https://egup-dev9.fa.us2.oraclecloud.com/fscmService/ProjectContractInvoiceService?WSDL");
 //		 System.out.println(((BindingProvider)projectContractInvoiceServiceI).getEndpointReference().toString());
 		
-		bindingProvider.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, "Nick_Virgilio@premierintl.com");
-		bindingProvider.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, "Vertiv2018");
+		String userName = "";
+		String pwd = "";
+		if (args.length >=2){
+		  userName = args[0];
+		  pwd = args[1];
+		}
+		else{
+			throw new Exception("Please enter UserID and Password");
+		}
+		
+		bindingProvider.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
+		bindingProvider.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, pwd);
 		
 		 //Map<String, List<String>> credentials = new HashMap<String,List<String>>();
 
