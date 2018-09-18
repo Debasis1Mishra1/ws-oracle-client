@@ -5,5 +5,14 @@
 	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
 	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="libs/poi-4.0.0.jar" sourcepath="/var/folders/w9/h_lxy56s0h3gbkdcq7012rwc0000gq/T/.org.sf.feeling.decompiler1537048130239/source/poi-4.0.0-sources.jar"/>
+	<classpathentry kind="lib" path="libs/poi-ooxml-schemas-4.0.0.jar"/>
+	<classpathentry kind="lib" path="libs/xmlbeans-3.0.1.jar"/>
+	<classpathentry kind="lib" path="libs/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="libs/poi-ooxml-4.0.0.jar" sourcepath="/var/folders/w9/h_lxy56s0h3gbkdcq7012rwc0000gq/T/.org.sf.feeling.decompiler1537048130239/source/poi-ooxml-4.0.0-sources.jar"/>
+	<classpathentry kind="lib" path="libs/poi-scratchpad-4.0.0.jar"/>
+	<classpathentry kind="lib" path="libs/commons-collections4-4.2.jar"/>
+	<classpathentry kind="lib" path="libs/commons-compress-1.18.jar"/>
+	<classpathentry kind="lib" path="libs/commons-lang3-3.8.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
