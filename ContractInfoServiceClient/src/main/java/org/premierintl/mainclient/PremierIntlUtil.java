@@ -1,5 +1,8 @@
 package org.premierintl.mainclient;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,9 +15,12 @@ import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.oracle.xmlns.apps.projects.billing.workarea.invoice.invoiceservicev2.ObjectFactory;
 import com.oracle.xmlns.apps.projects.billing.workarea.invoice.invoiceservicev2.TiebackInput;
+import com.oracle.xmlns.apps.projects.billing.workarea.invoice.invoiceservicev2.TiebackOutput;
+import com.oracle.xmlns.apps.projects.billing.workarea.invoice.invoiceservicev2.TiebackOutputResult;
 
 
 public class PremierIntlUtil {
@@ -95,6 +101,42 @@ public class PremierIntlUtil {
 	        }
 	    }
 	    return true;
+	}
+	
+	public void writeToExcel(TiebackOutputResult tiebackOutputResult,String filePath) throws IOException{
+      
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		Sheet responseSheet = workbook.createSheet("Response");
+        int rowIndex = 0;
+        for(TiebackOutput tieBackOutput : tiebackOutputResult.getValue()){
+            Row row = responseSheet.createRow(rowIndex++);
+            int cellIndex = 0;
+            //first place in row is name
+            row.createCell(cellIndex++).setCellValue(tieBackOutput.getContractNumber().getValue());
+
+            //second place in row is marks in maths
+            row.createCell(cellIndex++).setCellValue(tieBackOutput.getResultStatus().getValue());
+
+            //third place in row is marks in Science
+            row.createCell(cellIndex++).setCellValue(tieBackOutput.getTransferStatusCode().getValue());
+
+            //fourth place in row is marks in English
+            row.createCell(cellIndex++).setCellValue(tieBackOutput.getMessageData().getValue());
+
+        }
+
+        //write this workbook in excel file.
+        try {
+            FileOutputStream fos = new FileOutputStream(new File(filePath));
+            workbook.write(fos);
+            fos.close();
+            workbook.close();
+            System.out.println(filePath + " is successfully written");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 	}
 
 }

@@ -9,6 +9,8 @@ import javax.xml.ws.handler.Handler;
 import javax.xml.ws.handler.HandlerResolver;
 import javax.xml.ws.handler.PortInfo;
 
+import org.apache.poi.ss.usermodel.Workbook;
+
 import com.oracle.xmlns.apps.projects.billing.workarea.invoice.invoiceservicev2.ProjectContractInvoiceService;
 import com.oracle.xmlns.apps.projects.billing.workarea.invoice.invoiceservicev2.ProjectContractInvoiceService_Service;
 import com.oracle.xmlns.apps.projects.billing.workarea.invoice.invoiceservicev2.ServiceException;
@@ -38,13 +40,15 @@ public class MainClient {
 		String userName = "";
 		String pwd = "";
 		String excelPath = "";
-		if (args.length >=3){
+		String outputFilePath = "";
+		if (args.length >=4){
 		  userName = args[0];
 		  pwd = args[1];
 		  excelPath = args[2];
+		  outputFilePath = args[3];
 		}
 		else{
-			throw new Exception("Please enter UserID,Password and ExcelPath");
+			throw new Exception("Please enter UserID,Password and Excel input and output Path");
 		}
 		
 		bindingProvider.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
@@ -57,10 +61,12 @@ public class MainClient {
 		
 		ExcelReaderI excelReader = new ExcelReaderImpl();
 		InputStream inputStream = excelReader.getInputStreamFromPath(excelPath);
-		List<TiebackInput> inputList = PremierIntlUtil.INSTANCE.readInvoiceFromExcelFile(excelReader.getWorkBookFromInputStream(inputStream, "xlsx"));
+		Workbook workbook = excelReader.getWorkBookFromInputStream(inputStream, "xlsx");
+		List<TiebackInput> inputList = PremierIntlUtil.INSTANCE.readInvoiceFromExcelFile(workbook);
 		try {
 			
 			TiebackOutputResult tiebackOutputResult = projectContractInvoiceServiceI.tieback(inputList);
+			PremierIntlUtil.INSTANCE.writeToExcel(tiebackOutputResult, outputFilePath);
 			System.out.println(tiebackOutputResult.getMessage());
 			
 		} catch (ServiceException e) {
