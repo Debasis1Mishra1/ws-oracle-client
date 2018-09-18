@@ -111,16 +111,16 @@ public class PremierIntlUtil {
         for(TiebackOutput tieBackOutput : tiebackOutputResult.getValue()){
             Row row = responseSheet.createRow(rowIndex++);
             int cellIndex = 0;
-            //first place in row is name
+            //first place in row is ContractNumber
             row.createCell(cellIndex++).setCellValue(tieBackOutput.getContractNumber().getValue());
 
-            //second place in row is marks in maths
+            //second place in row is ResultStatus
             row.createCell(cellIndex++).setCellValue(tieBackOutput.getResultStatus().getValue());
 
-            //third place in row is marks in Science
+            //third place in row is TransferStatusCode
             row.createCell(cellIndex++).setCellValue(tieBackOutput.getTransferStatusCode().getValue());
 
-            //fourth place in row is marks in English
+            //fourth place in row is MessageData
             row.createCell(cellIndex++).setCellValue(tieBackOutput.getMessageData().getValue());
 
         }
