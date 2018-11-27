@@ -72,6 +72,10 @@ public class PremierIntlUtil {
 	            	System.out.println(objDefaultFormat.formatCellValue(nextCell));
 	                break;
 	            case 5:
+	            	tiebackInput.setSystemReference(objectFactory.createTiebackInputSystemReference(Long.parseLong(objDefaultFormat.formatCellValue(nextCell))));
+	            	System.out.println(objDefaultFormat.formatCellValue(nextCell));
+	                break;
+	            case 6:
 	            	tiebackInput.setTransferStatusCode(objectFactory.createTiebackInputTransferStatusCode(objDefaultFormat.formatCellValue(nextCell)));
 	            	System.out.println(objDefaultFormat.formatCellValue(nextCell));
 	                break;
@@ -122,6 +126,9 @@ public class PremierIntlUtil {
 
             //fourth place in row is MessageData
             row.createCell(cellIndex++).setCellValue(tieBackOutput.getMessageData().getValue());
+            
+          //Fifth place in row is SystemReference
+            row.createCell(cellIndex++).setCellValue(tieBackOutput.getSystemReference().getValue());
 
         }
 

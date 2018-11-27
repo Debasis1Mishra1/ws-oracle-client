@@ -11,5 +11,4 @@ public interface ExcelReaderI {
 	Workbook getWorkBookFromInputStream(InputStream inputStream, String extension) throws IOException;
 	InputStream getInputStreamFromPath(String filePath) throws FileNotFoundException;
 	
-
 }

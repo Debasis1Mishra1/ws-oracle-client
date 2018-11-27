@@ -1,6 +1,7 @@
 package org.premierintl.mainclient;
 
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,25 @@ public class MainClient {
 
 	public static void main(String[] args) throws Exception {
 		
-	ProjectContractInvoiceService_Service projectContractInvoiceService_Service = new ProjectContractInvoiceService_Service();
+		String userName = "";
+		String pwd = "";
+		String excelPath = "";
+		String outputFilePath = "";
+		String wsdlURL = "";
+		if (args.length >=4){
+		  userName = args[0];
+		  pwd = args[1];
+		  excelPath = args[2];
+		  outputFilePath = args[3];
+		  wsdlURL = args[4];
+		}
+		else{
+			throw new Exception("Please enter UserID,Password,Excel input and output Path and WSDL URL");
+		}
+		
+	URL url = new URL(wsdlURL);
+	
+	ProjectContractInvoiceService_Service projectContractInvoiceService_Service = new ProjectContractInvoiceService_Service(url);
 		
 	projectContractInvoiceService_Service.setHandlerResolver( new HandlerResolver() {
         @SuppressWarnings("rawtypes")
@@ -37,19 +56,7 @@ public class MainClient {
 		BindingProvider bindingProvider = ((BindingProvider)projectContractInvoiceServiceI);
 		//Map<String, Object> bindingProviderMap = bindingProvider.getRequestContext();
 	
-		String userName = "";
-		String pwd = "";
-		String excelPath = "";
-		String outputFilePath = "";
-		if (args.length >=4){
-		  userName = args[0];
-		  pwd = args[1];
-		  excelPath = args[2];
-		  outputFilePath = args[3];
-		}
-		else{
-			throw new Exception("Please enter UserID,Password and Excel input and output Path");
-		}
+		
 		
 		bindingProvider.getRequestContext().put(BindingProvider.USERNAME_PROPERTY, userName);
 		bindingProvider.getRequestContext().put(BindingProvider.PASSWORD_PROPERTY, pwd);
